@@ -44,42 +44,39 @@
                     <a class="nav-item nav-link"
                         href="https://www.linkedin.com/in/karamjeet-singh-12101995/">LinkedIn</a>
                     <a class="nav-item nav-link" href="{% static 'resume.pdf' %}">Resume</a>
-                    <a class="nav-item nav-link" href="{% url 'allblogs' %}">Blog</a>
+                    <a class="nav-item nav-link active" href="{% url 'allblogs' %}">Blog</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <main role="main">
+        <div class="container">
+            <h1 class="text-center pt-4">Welcome to Karam's Blog</h1>
+            <br>
+            <br>
+            <h2>Latest Post</h2>
+            <hr>
+            {% for blog in allblogs.all %}
+            <div class="card mb-2">
+                <div class="card-header">
+                    {{ blog.title }}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <img src="{{ blog.image.url }}" class="col-4">
+                        <p class="card-text col-8">{{ blog.limited_body }}</p>
+                        {% if blog.limited_body != blog.body %}
 
-        <section class="jumbotron text-center" style="background-image: url('{% static 'banner.jpg' %}');">
-            <div class="container">
-                <h1 class="text-light mt-5">Hey, I'm Karamjeet</h1>
-                <p class="lead text-light">Let me help to turn your concept into a fully functional online
-                    product.
-                </p>
-                <p>
-                    <a href="mailto:singhkaramjeetaman@gmail.com" class="btn btn-primary my-2">Email Me</a>
-                </p>
-            </div>
-        </section>
-
-        <div class="album py-5 bg-light">
-            <div class="container">
-
-                <div class="row">
-                    {% for job in jobs.all %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            <img class="card-img-top" src="{{ job.image.url }}" alt="">
-                            <div class="card-body">
-                                <p class="card-text">{{ job.summary }}</p>
-                            </div>
-                        </div>
+                        <a href="{% url 'detailed_blog' blog.id  %}" class="ml-auto">read more...</a>
+                        {% endif %}
                     </div>
-                    {% endfor %}
+                </div>
+                <div class="card-footer">
+                    <span class="">{{ blog.pretty_pub_date }}</span>
                 </div>
             </div>
+            {% endfor %}
         </div>
 
     </main>
